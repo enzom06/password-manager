@@ -1,0 +1,30 @@
+<div class="form">
+  <h1>SignIn</h1>
+  <form class="formSignIn">
+    <input type="text" id="username" name="username" placeholder="username"><br>
+
+    <input type="text" id="domain" name="domain" placeholder="Domaine"><br>
+    
+    <input type="number" id="length" name="length" placeholder="taille du mot de passe"><br> <!-- default -->
+
+    <input type="number" id="salt" name="salt" placeholder="Salt"><br> <!-- default -->
+    
+    <input type="number" id="iteration" name="iteration" min="42" max="420000" placeholder="Itération"><br> <!-- default -->
+    
+    <input type="number" id="version" name="version" placeholder="Version"><br> <!-- default -->
+    
+    <select id="status" name="status" placeholder="Statut">
+      <option value="great">Great</option>
+      <option value="wait-to-update">Wait to Update</option>
+    </select><br>
+    
+    <textarea id="more-information" name="more-information" rows="3" cols="25" placeholder="Plus d'informations"></textarea><br>
+
+    <input type="pasword" id="speedPass" name="speedPass" placeholder="speedPass" disabled><br> <!-- default -->
+    <br>
+    <input type="submit" value="Enregistrer le mot de passe">
+  </form>
+  <br>
+  <span id="generate_password"></span>
+  <br>
+</div>

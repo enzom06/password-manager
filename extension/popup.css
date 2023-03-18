@@ -1,0 +1,144 @@
+label {
+    display: inline-block;
+    width: 150px;
+    margin-bottom: 4px;
+}
+
+input[type="text"], input[type="number"], select, textarea {
+    width: 250px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 4px;
+}
+
+input[type="submit"], input[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+    background-color: #45a049;
+}
+
+textarea {
+    width: 250px;
+    height: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+}
+
+
+  
+  /* Style pour le conteneur principal */
+.container {
+    margin: 0;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+form {
+    flex: 1;
+}
+
+body {
+    padding: 15px;
+    padding: 15px;
+    min-width: 300px;
+    /* Ajoute une ombre pour donner de la profondeur */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: height 0.5s ease-in-out;
+}
+
+/**/
+
+footer {
+    padding: 8px 0;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    font-size: 0.8em;
+    color: #777;
+
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+
+/* Styles pour les boutons de l'extension */
+button {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+  
+/* Style pour les boutons actifs */
+button:hover {
+    background-color: #333;
+    color: #fff;
+    transform: translateY(-1px);
+}
+*
+button:active {
+    transform: translateY(+1px);
+}
+
+.initPopupForm {
+
+  position: fixed;
+  background-color: #7fa5ff;
+
+  margin: 0;
+  padding: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.shadowInitPopupForm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+

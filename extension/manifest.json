@@ -1,0 +1,35 @@
+{
+    "name": "Nom de votre extension",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Description de votre extension",
+    "icons": {
+    },
+    "browser_action": {
+      "default_title": "Titre de votre extension",
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "tabs",
+      "storage",
+      "activeTab",
+      "<all_urls>"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["http://*/*", "https://*/*"],
+        "js": [
+          "crypto-js.min.js",
+          "logSavePsw.js",
+          "main.js",
+          "popup.js"
+        ],
+        "html": [
+          "formSignin.html",
+          "formLogin.html"
+        ],
+        "run_at": "document_end"
+      }
+    ]
+  }
+  

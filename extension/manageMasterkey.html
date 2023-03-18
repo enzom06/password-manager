@@ -1,0 +1,52 @@
+<div class="form">
+  <h1>Paramètre</h1>
+  <select>
+    <option>Change Master Key</option>  
+    <option>See Master Key</option>
+  
+    <option>Change SpeedPass</option>  
+    <option>See SpeedPass</option>
+  </select>
+
+  <div id="list_data">
+    <table>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>domain</th>
+          <th>username</th>
+          <th>password</th>
+          <th>status</th>
+          <th>more_information</th>
+        </tr>
+      </thead>
+      <tbody>
+        <script>
+          for(let i=0; i<localStorage.length; i++) {
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            var credential = JSON.parse(value);
+            var content="";
+            content+="<tr>";
+            content+="<td">+credential['id']+"</td>";
+            content+="<td>"+credential['domain']+"</td>";
+            content+="<td>"+credential['username']+"</td>";
+            content+="<td>"+credential['password']+"</td>";
+            content+="<td>"+credential['status']+"</td>";
+            content+="<td>"+credential['more_information']+"</td>";
+            content+="</tr>";
+          }
+          if (localStaorage.length == 0) {
+            content = "<tr><td colspan='6'>Aucun mot de passe enregistré</td></tr>";
+          }
+        </script>
+      </tbody>
+    </table>
+
+  </div>
+  <form>
+    <input type="number" id="id" name="id" placeholder="id"><br>
+    <input type="password" id="masterPassword" name="masterPassword" placeholder="masterPassword"><br>
+    <input type="submit" value="Submit">
+  </form>
+</div>
