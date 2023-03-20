@@ -1,94 +1,15 @@
-/*
-// fonction d'appel de la commande pour le shortcupt
-chrome.commands.onCommand.addListener(function(command) {
-  if (command == "open-my-extension") {
-    chrome.tabs.create({url: chrome.extension.getURL('popup.html')});
-  }
-});*/
-/*
-// Set a shortcut for the extension.
-chrome.commands.getAll(function(commands) {
-  for (var i = 0; i < commands.length; i++) {
-    if (commands[i].name == "open-my-extension") {
-      return;
-    }
-  }
-  chrome.commands.setShortcut("open-my-extension", "Shift+P");
-});
-*/
-
-/*
-chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-   chrome.tabs.executeScript(
-      tabs[0].id,
-      { code: "document.querySelector('form input[type=email]').value" },
-      function (result) {
-         var email = result[0];
-         chrome.tabs.executeScript(
-            tabs[0].id,
-            { code: "document.querySelector('form input[type=password]').value" },
-            function (result) {
-              var password = result[0];
-              console.log(email, password);
-              
-                if (email && password) {
-                  credentialsDiv.innerHTML = '<p>Identifiants de connexion enregistrés :</p><p>Adresse email : ' + email + '</p><p>Mot de passe : ' + password + '</p>';
-                } else {
-                  credentialsDiv.innerHTML = '<p>Pas d\'identifiants de connexion enregistrés pour cette page.</p>';
-                }
-            }
-         );
-      }
-   );
-});*/
-
-
-
-/*
-// Fonction pour récupérer les valeurs de l'email et du mot de passe dans la page principale de l'onglet
-function getEmailAndPassword() {
-  if (!chrome.tabs) {
-    return Promise.reject('chrome.tabs is not available'), NULL;
-  }
-  
-  return new Promise((resolve, reject) => {
-    chrome.tabs.executeScript({ code: "({ email: document.querySelector('input[name=email]').value, password: document.querySelector('input[name=current-password]').value })" }, (result) => {
-      if (chrome.runtime.lastError) {
-        reject(chrome.runtime.lastError.message);
-      } else {
-        resolve(result[0]);
-      }
-    });
-  });
-}
-
-// Appeler la fonction toutes les secondes avec setInterval
-setInterval(async () => {
-  try {
-    const { email, password } = await getEmailAndPassword();
-    if (email && password) {
-      console.log(`Email: ${email}, Mot de passe: ${password}`);
-      var credentialsDiv = document.querySelector('#credentials');
-      credentialsDiv.innerHTML = '<p>Identifiants de connexion enregistrés :</p><p>Adresse email : ' + email + '</p><p>Mot de passe : ' + password + '</p>';
-    } else {
-      credentialsDiv.innerHTML = '<p>Pas d\'identifiants de connexion enregistrés pour cette page.</p>';
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}, 1000);
-*/
-
 function getDomainName() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var currentUrl = tabs[0].url;
     var domainName = new URL(currentUrl).hostname;
-    if (domainName.split('.')[0] != 'www' && document.querySelector("#domain").innerText == 'www') {
-      domainName = domainName.split('.')[1];
-    }
-    document.querySelector("form #domain").value = domainName;
+    var parts = domainName.split('.');
+      domainName = parts[parts.length - 2] + '.' + parts[parts.length - 1];
+      if (document.querySelector('form input[name="domain"]')){
+        document.querySelector('form [name="domain"]').value = domainName;
+      }
   });
 }
+
 
 // Fonction pour charger le contenu d'un fichier HTML
 function loadHTMLFile(filename) {
@@ -105,15 +26,19 @@ function loadHTMLFile(filename) {
 }
 
 async function generatePassword() {
-  var salt = document.querySelector("form #salt").value;
-  var key_length = document.querySelector("form #length").value;
-  var iterations = document.querySelector("form #iteration").value;
+  var salt = document.querySelector("form input[name='salt']").value;
+  var key_length = document.querySelector("form input[name='length']").value;
+  var iterations = document.querySelector("form input[name='iteration']").value;
   var options = [
-    document.querySelector("form #username").value,
-    document.querySelector("form #domain").value
+    document.querySelector("form input[name='username']").value,
+    document.querySelector("form input[name='domain']").value
   ];
   document.querySelector("#generate_password").innerHTML = "Génération du mot de passe en cours...";
-  var psw = await get_password(getMasterKey(), options, salt, key_length, iterations);
+  
+  var includeUppercase = document.querySelector("form input[name='includeUppercase']").checked;
+  var includeSpeciaux = document.querySelector("form input[name='specialCharRequired']").checked;
+
+  var psw = await get_password(getMasterKey(), options, salt, key_length, iterations, includeUppercase, includeSpeciaux);
   document.querySelector("#generate_password").innerHTML = psw;
   return psw;
 }
@@ -135,35 +60,76 @@ interfaceCreationElement(
 */
 
 window.onload = function() {
-  // Ajouter un gestionnaire d'événement pour le bouton
+  
   document.querySelector("#add-credential").addEventListener("click", function() {
     loadHTMLFile("formSignIn.html");
-    // wait one second before setting the default value
+
     setTimeout(function() {
       defaultValue();
       document.querySelector("form.formSignIn input[type=submit]").addEventListener("click", async function(e) {
         e.preventDefault();
-        // disabled button
         document.querySelector("form.formSignIn input[type=submit]").style.display = "none";
-        var psw = await generatePassword();
-        var username = document.querySelector("form.formSignIn #username").value;
-        var domain = document.querySelector("form.formSignIn #domain").value;
-        var salt = document.querySelector("form.formSignIn #salt").value;
-        var iteration = document.querySelector("form.formSignIn #iteration").value;
-        var version = document.querySelector("form.formSignIn #version").value;
-        var status = document.querySelector("form.formSignIn #status").value;
+        var username = document.querySelector("form.formSignIn input[name='username']").value;
+        var domain = document.querySelector("form.formSignIn input[name='domain']").value;
+        var salt = document.querySelector("form.formSignIn input[name='salt']").value;
+        var iteration = document.querySelector("form.formSignIn input[name='iteration']").value;
+        var version = document.querySelector("form.formSignIn input[name='version']").value;
+        var status = document.querySelector("form.formSignIn select[name='status']").value;
         var timestamp_creation = Date.now().toString();
         var timestamp_modification = Date.now().toString();
         var timestamp_use = Date.now().toString();
-        var information = document.querySelector("form.formSignIn #more-information").value;
-        interfaceCreationElement(username, domain, salt, iteration, version, status, timestamp_creation, timestamp_modification, timestamp_use, information, password);
-        document.querySelector("form.formSignIn input[type=submit]").style.display = "block";
+        var information = document.querySelector("form.formSignIn textarea[name='more_information']").value;
+        var includeUppercase = document.querySelector("form.formSignIn input[name='includeUppercase']").checked;
+        var includeSpecialChars = document.querySelector("form.formSignIn input[name='specialCharRequired']").checked;
+        interfaceCreationElement(username, domain, salt, iteration, version, status, timestamp_creation, timestamp_modification, timestamp_use, information, includeUppercase, includeSpecialChars);
+        document.querySelector("form.formSignIn input[type='submit']").style.display = "none";
       });
       document.querySelector("form.formSignIn").addEventListener("input", async (event) => {
         generatePassword();
       }, 1000);
+      document.querySelector("#show_para").addEventListener("click", function() {
+        document.querySelectorAll("#sub_para").forEach(function(element) {
+          //element.classList.toggle("hidden");
+          if(element.style.display != "block") {
+            element.style.display = "block";
+          } else {
+            element.style.display = "none";
+          }
+        });
+      });
     }, 500);
   });
+
+  // Ajouter un gestionnaire d'événement pour le bouton
+  document.querySelector("#generate-credential").addEventListener("click", function() {
+    loadHTMLFile("formLogIn.html");
+    setTimeout(function() {
+      defaultValue();
+      showElements(where_query="tbody#list_data_login");
+      document.querySelector("input#login_choice").addEventListener("change", function(e) {
+        var id = document.querySelector("#login_choice").value;
+        getLoginPassword(id);
+      });
+
+      document.querySelector("input#copy_password").addEventListener("click", async function(e) {
+        e.preventDefault();
+        document.querySelector("input#copy_password").style.display="none";
+        var id = document.querySelector("#login_choice").value;
+        getLoginPassword(id);
+        copySpanToClipboard("#generate_password");
+        document.querySelector("input#copy_password").style.display="block";
+      });
+
+      document.querySelector("form#logIn").addEventListener("input", async (event) => {
+        var username = document.querySelector("form #username").value;
+        var domain = document.querySelector("form #domain").value;
+        const ids = getElementsId(username, domain);
+        highlightRows('table#list_data_login tbody', ids);
+      }, 1000);
+    }, 500);
+    
+  });
+
   // Ajouter un gestionnaire d'événement pour le bouton
   document.querySelector("#remove-credential").addEventListener("click", function() {
     loadHTMLFile("formDelete.html");
@@ -177,34 +143,84 @@ window.onload = function() {
       });
     }, 500);
   });
-  // Ajouter un gestionnaire d'événement pour le bouton
-  document.querySelector("#generate-credential").addEventListener("click", function() {
-    loadHTMLFile("formLogIn.html");
+
+  document.querySelector("#profil-credential").addEventListener("click", function() {
+    loadHTMLFile("formProfil.html");
+    
     setTimeout(function() {
-      defaultValue();
-      showElements(where_query="tbody#list_data_login", username=document.querySelector("form #username").value);
-      document.querySelector("#find_data_for_password").addEventListener("click", function(e) {
+      document.querySelector("form#formMasterKeyChange input[type=submit]").addEventListener("click", function(e) {
         e.preventDefault();
-        
-        var username = document.querySelector("form #username").value;
-        var domain = document.querySelector("form #domain").value;
-        var length = document.querySelector("form #length").value;
-        var salt = document.querySelector("form #salt").value;
-        var iteration = document.querySelector("form #iteration").value;
-        generatePassword();
+        var oldMasterKey = document.querySelector("form#formMasterKeyChange input[name='oldMasterKey']").value;
+        var masterKey = document.querySelector("form#formMasterKeyChange input[name='masterKey']").value;
+        var masterKeyConfirm = document.querySelector("form#formMasterKeyChange input[name='masterKeyConfirm']").value;
+
+        if(oldMasterKey != getMasterKey()) {
+          alert("Ancien mot de passe incorrect");
+          return false;
+        }
+        if (masterKey == masterKeyConfirm) {
+
+        } else {
+          alert("Les mots de passe ne sont pas identiques");
+          return false;
+        }
+        changeMasterKey(masterKey); // !!!
+        document.querySelector("form#formMasterKeyChange input[type=submit]").style.display = "none";
       });
 
-      document.querySelector("form#logIn").addEventListener("input", async (event) => {
-        var username = document.querySelector("form #username").value;
-        var domain = document.querySelector("form #domain").value;
-        console.log(username, domain);
-        const ids = getElementsId(username, domain);
-        console.log(ids);
-        highlightRows('table#list_data_login tbody', ids);
-      }, 1000);
+      document.querySelector("form#formSpeedPassChange input[type=submit]").addEventListener("click", function(e) {
+        e.preventDefault();
+        var oldSpeedPass = document.querySelector("form#formSpeedPassChange input[name='oldSpeedPass']").value;
+        var speedPass = document.querySelector("form#formSpeedPassChange input[name='speedPass']").value;
+        var speedPassConfirm = document.querySelector("form#formSpeedPassChange input[name='speedPassConfirm']").value;
+
+        if(verifySpeedPass(oldSpeedPass) == false) {
+          alert("Ancien mot de passe incorrect");
+          return false;
+        }
+
+        if (speedPass == speedPassConfirm) {
+          changeSpeedPass(oldSpeedPass, speedPass);
+        } else {
+          alert("Les mots de passe ne sont pas identiques");
+        }
+        document.querySelector("span#status").innerHTML = "Mot de passe changé";
+      });
+      
+      document.querySelector("form#formGetMasterKey input[type=submit]").addEventListener("click", function(e) {
+        e.preventDefault();
+        var speedPass = document.querySelector("form#formSpeedPassChange input[name='speedPass']").value;
+        if(verifySpeedPass(speedPass) == false) {
+          alert("Ancien mot de passe incorrect");
+          return false;
+        }
+        document.querySelector("span#showMasterKey").innerHTML = "Votre MasterKey " + getMasterKey();
+        setInterval(function() {
+          document.querySelector("span#showMasterKey").innerHTML = "";
+        }, 30000);
+      });
     }, 500);
-    
   });
+
+
+
+  // Ajouter un gestionnaire d'événement pour le bouton
+  document.querySelector("#search-credential").addEventListener("click", function() {
+    loadHTMLFile("formSearch.html");
+    setTimeout(function() {
+      showElements("tbody#list_data_search");
+      document.querySelector("form#search input[type=submit]").addEventListener("click", function(e) {
+        e.preventDefault();
+        var username = document.querySelector("form#search #username").value;
+        var domain = document.querySelector("form#search #domain").value;
+        const ids = getElementsId(username, domain);
+        showElements("tbody#list_data_search");
+        highlightRows('tbody#list_data_search', ids);
+      });
+    }, 500);
+  });
+
+
 	if (localStorage.getItem('masterKey') == null) {
     showMasterKeyForm();
 	}
@@ -212,15 +228,11 @@ window.onload = function() {
 	if (localStorage.getItem('speedPass') == null) {
 		showSpeedPassForm();
 	}
-  //sessionStorage.setItem('speedPass', '123') // TODO : à supprimer
-  // Afficher le formulaire de connexion
   if (localStorage.getItem('speedPass') != null && sessionStorage.getItem('speedPass') == null) {
     showSpeedPassSessionLogInForm();
   }
 }
 
-// lors de l'ouverture de l'extension, charger le formulaire de connexion
-//loadHTMLFile("formLogIn.html");
 
 
 

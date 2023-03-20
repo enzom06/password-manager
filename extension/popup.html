@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title>Gestionnaire de mot de passe</title>
+    <title>Mini Gestionnaire de mot de passe</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="popup.css">
     <script src="crypto-js.min.js"></script>
@@ -11,13 +11,24 @@
     <script src="popup.js"></script>
   </head>
   <body>
+    <head>
+      <button id="generate-credential">
+        <img class='icon' src="icon/unlock-svgrepo-com.svg" alt="refresh">
+      </button>
+      <button id="add-credential">
+        <img class='icon' src="icon/add-1-svgrepo-com.svg" alt="add">
+      </button>
+      <button id="remove-credential">
+        <img class='icon' src="icon/trash-svgrepo-com.svg" alt="delete">
+      </button>
+      <button id="search-credential">
+        <img class='icon' src="icon/search-square-svgrepo-com.svg" alt="search">
+      </button>
+      <button id="profil-credential">
+        <img class='icon' src="icon/smile-square-svgrepo-com.svg" alt="search">
+      </button>
+    </head>
     <div class="container">
-        <h1>Choisissez un menu</h1>
-      </div>
-      <footer>
-        <button id="add-credential">Ajouter un mot de passe</button>
-        <button id="remove-credential">Supprimer un mot de passe</button>
-        <button id="generate-credential">Générer un mot de passe</button>
-      </footer>
+    </div>
   </body>
 </html>

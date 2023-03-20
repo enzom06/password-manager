@@ -1,19 +1,13 @@
-<div class="login">
+<div>
   <h1>LogIn</h1>
   <form id="logIn">
-    <input type="text" id="username" name="username" placeholder="username"><br>
+    <input type="text" id="username" name="username" placeholder="pseudo"><br>
 
-    <input type="text" id="domain" name="domain" placeholder="Domaine"><br>
-        
-    <input type="number" id="length" name="length" placeholder="taille du mot de passe" disabled  style="display: none;"><br> <!-- default -->
+    <input type="text" id="domain" name="domain" placeholder="domaine"><br>
 
-    <input type="number" id="salt" name="salt" placeholder="Salt" disabled  style="display: none;"><br> <!-- default -->
+    <input type="number" id="login_choice" name="login_choice" placeholder="id"><br>
     
-    <input type="number" id="iteration" name="iteration" min="42" max="420000" placeholder="Itération" disabled  style="display: none;"><br> <!-- default -->
-    
-    <input type="password" id="speedPass" name="speedPass" placeholder="speedPass" disabled style="display: none;"><br><br>
-    
-    <input id="find_data_for_password" type="submit" value="chercher votre mot de passe"  style="display: none;">
+    <input id="copy_password" type="submit" value="copy">
   </form>
   <br>
   <span id="generate_password"></span>
@@ -23,13 +17,8 @@
       <thead>
         <tr>
           <th>id</th>
-          <th>domain</th>
-          <th>username</th>
-          <th>version</th>
-          <th>creation time</th>
-          <th>last use</th>
-          <th>status</th>
-          <th>more information</th>
+          <th>domaine</th>
+          <th>pseudo</th>
         </tr>
       </thead>
       <tbody id="list_data_login">

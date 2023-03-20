@@ -1,10 +1,13 @@
+html {
+    min-width: 380px;
+}
 label {
     display: inline-block;
     width: 150px;
     margin-bottom: 4px;
 }
 
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"], input[type="password"], input[type="number"], select, textarea {
     width: 250px;
     padding: 8px;
     border: 1px solid #ccc;
@@ -13,22 +16,38 @@ input[type="text"], input[type="number"], select, textarea {
     margin-bottom: 4px;
 }
 
-input[type="submit"], input[type="button"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 4px 8px;
-    border: none;
+input[type="number"] {
+    width: 100px;
+}
+
+input[type="text"], input[type="password"], input[type="submit"], input[type="button"] {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #bbb;
     border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 input[type="submit"]:hover, input[type="button"]:hover {
-    background-color: #45a049;
+
+    background-color: #777;
+    color: #fff;
+    transform: translateY(-2px);
 }
 
+input[type="submit"]:active, input[type="button"]:active {
+    background-color: #555;
+    transform: translateY(+2px);
+}
 textarea {
-    width: 250px;
-    height: 100px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -57,9 +76,9 @@ body {
     padding: 15px;
     padding: 15px;
     min-width: 300px;
+    min-height: 100px;
     /* Ajoute une ombre pour donner de la profondeur */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    transition: height 0.5s ease-in-out;
 }
 
 /**/
@@ -92,23 +111,25 @@ button {
     cursor: pointer;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    margin-bottom: 4px;
 }
   
 /* Style pour les boutons actifs */
 button:hover {
-    background-color: #333;
+    background-color: #777;
     color: #fff;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
-*
+
 button:active {
-    transform: translateY(+1px);
+    background-color: #555;
+    transform: translateY(0px);
 }
 
 .initPopupForm {
 
   position: fixed;
-  background-color: #7fa5ff;
+  background-color: #fff;
 
   margin: 0;
   padding: 15px;
@@ -140,5 +161,53 @@ button:active {
   align-items: center;
   height: 100%;
 }
+
+
+.icon {
+  width: 25px;
+  height: 25px;
+}
+
+#sub_para {
+    display: none;
+    transition: all 2s ease;
+}
+
+#show_para .icon {
+    height: 25px;
+    width: 55px;
+}
+
+#show_para {
+    padding: 0px;
+}
+
+button#show_para:hover {
+    transition: 0.1s;
+    transform: translateY(0px);
+
+}
+
+
+.table-container {
+    height: 200px; /* Hauteur fixe pour afficher 5 éléments */
+    overflow-y: scroll; /* Ajouter une barre de défilement verticale */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+
+
+
 
 

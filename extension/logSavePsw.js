@@ -1,11 +1,3 @@
-// userSetNewMasterKey: function
-// afficher un formulaire
-// // event listener sur le bouton "valider" => save new masterKey
-
-// userSetNewSpeedPass: function
-// aficcher un formulaire
-// // event listener sur le bouton "valider" => save new speedPass
-
 function showSpeedPassForm() {
   var speedPassShadow = document.createElement('div');
   speedPassShadow.setAttribute('class', 'initPopupShadow');
@@ -16,7 +8,6 @@ function showSpeedPassForm() {
   speedPassForm.append(label);
   speedPassForm.setAttribute('class', 'initPopupForm');
   speedPassForm.setAttribute('id', 'speedPassForm');
-  //speedPassForm.setAttribute('action', ''); // ???
 
   var speedPassInput = document.createElement('input');
   speedPassInput.setAttribute('type', 'password');
@@ -25,13 +16,10 @@ function showSpeedPassForm() {
   var speedPassSubmit = document.createElement('input');
   speedPassSubmit.setAttribute('type', 'submit');
   speedPassSubmit.setAttribute('value', 'Valider');
-
-
-  // event listener sur le bouton "valider" => save new speedPass
+  
+  // for setup speedPass
   speedPassSubmit.addEventListener('click', function(event) {
     event.preventDefault();
-    //saveSpeedPass();
-    // Code à exécuter lorsque le formulaire est soumis
     initSpeedPass(speedPassInput.value);
     speedPassShadow.remove();
   });
@@ -46,12 +34,8 @@ function showSpeedPassSessionLogInForm() {
   speedPassShadow.setAttribute('class', 'initPopupShadow');
   speedPassShadow.setAttribute('id', 'speedPassShadow');
   var speedPassForm = document.createElement('form');
-  var label = document.createElement('label');
-  label.innerHTML = 'SpeedPass<br><br>connecter vous<br>';
-  speedPassForm.append(label);
   speedPassForm.setAttribute('class', 'initPopupForm');
   speedPassForm.setAttribute('id', 'speedPassForm');
-  //speedPassForm.setAttribute('action', ''); // ???
 
   var speedPassInput = document.createElement('input');
   speedPassInput.setAttribute('type', 'password');
@@ -62,8 +46,7 @@ function showSpeedPassSessionLogInForm() {
   speedPassSubmit.setAttribute('type', 'submit');
   speedPassSubmit.setAttribute('value', 'Valider');
 
-
-  // event listener sur le bouton "valider" => save new speedPass
+  // for log in with speedPass
   speedPassSubmit.addEventListener('click', (event) => {
     event.preventDefault();
     //saveSpeedPass();
@@ -128,24 +111,22 @@ function showMasterKeyForm() {
 async function defaultValue() {
   getDomainName();
 
-  var username = document.querySelector('form input#username');
+  var username = document.querySelector('form input[name="username"]');
   if(username != null) {
     username.value = await searchUserName();
   }
-  
 
-  var salt = document.querySelector('form input#length');
-  if(salt != null) {
-    salt.value = 16;
+  var length = document.querySelector('form  input[name="length"]');
+  if(length != null) {
+    length.value = 16;
   }
 
-  var salt = document.querySelector('form input#salt');
+  var salt = document.querySelector('form  input[name="salt"]');
   if(salt != null) {
     salt.value = 42;
   }
-  
 
-  var interation = document.querySelector('form input#iteration');
+  var interation = document.querySelector('form  input[name="iteration"]');
   if(interation != null) {
     interation.value = 1000;
   }
@@ -153,12 +134,12 @@ async function defaultValue() {
   //var keylen = document.querySelector('form.formSignIn input#keylen');
   //keylen.value = 64;
   
-  var version = document.querySelector('form input#version');
+  var version = document.querySelector('form  input[name="version"]');
   if(version != null) {
     version.value = 1;
   }
 
-  var speedPass = document.querySelector('form input#speedPass');
+  var speedPass = document.querySelector('form  input[name="speedPass"]');
   if(speedPass != null) {
     speedPass.type = 'text';
     speedPass.value = getSpeedPass();

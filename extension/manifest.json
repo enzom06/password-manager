@@ -1,9 +1,12 @@
 {
-    "name": "Nom de votre extension",
+    "name": "SimpleOpenPasswordManager",
     "version": "1.0",
     "manifest_version": 2,
-    "description": "Description de votre extension",
+    "description": "un simple gestionnaire de mot de passe",
     "icons": {
+      "32": "icon/32x32.png",
+      "192": "icon/192x192.png",
+      "512": "icon/512x512.png"
     },
     "browser_action": {
       "default_title": "Titre de votre extension",

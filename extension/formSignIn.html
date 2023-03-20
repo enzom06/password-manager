@@ -1,30 +1,46 @@
-<div class="form">
+<div>
   <h1>SignIn</h1>
   <form class="formSignIn">
-    <input type="text" id="username" name="username" placeholder="username"><br>
+    <input type="text" id="username" name="username" placeholder="username">
 
-    <input type="text" id="domain" name="domain" placeholder="Domaine"><br>
-    
-    <input type="number" id="length" name="length" placeholder="taille du mot de passe"><br> <!-- default -->
+    <input type="text" id="domain" name="domain" placeholder="Domaine">
 
-    <input type="number" id="salt" name="salt" placeholder="Salt"><br> <!-- default -->
+    <label for="includeUppercase">Majuscule</label>
+    <input type="checkbox" id="includeUppercase" name="includeUppercase" value="includeUppercase" checked><br>
     
-    <input type="number" id="iteration" name="iteration" min="42" max="420000" placeholder="Itération"><br> <!-- default -->
+
+    <label for="specialCharRequired">Caractère spécial</label>
+    <input type="checkbox" id="specialCharRequired" name="specialCharRequired" value="specialCharRequired" checked><br>
     
-    <input type="number" id="version" name="version" placeholder="Version"><br> <!-- default -->
     
-    <select id="status" name="status" placeholder="Statut">
+    <label for="length">Taille du mot de passe</label>
+    <input type="number" id="length" name="length" placeholder="taille du mot de passe"> <!-- default --> <br>
+
+    <label id="sub_para" for="salt">salt</label>
+    <input id="sub_para" type="number" id="salt" name="salt" placeholder="Salt"> <!-- default -->
+    
+    <label id="sub_para" for="iteration">Itération</label>
+    <input id="sub_para" type="number" id="iteration" name="iteration" min="42" max="420000" placeholder="Itération"> <!-- default -->
+    
+    <label id="sub_para" for="version">Version</label>
+    <input id="sub_para" type="number" id="version" name="version" placeholder="Version"> <!-- default -->
+
+    <label id="sub_para" for="status">Statut</label>
+    <select id="sub_para" id="status" name="status" placeholder="Statut">
       <option value="great">Great</option>
-      <option value="wait-to-update">Wait to Update</option>
-    </select><br>
+      <option value="wait-to-update">En attante de modification (ex: le mot de passe à été dévoilé par le site web)</option>
+    </select>
     
-    <textarea id="more-information" name="more-information" rows="3" cols="25" placeholder="Plus d'informations"></textarea><br>
+    <label for="more_information">Plus d'informations</label>
+    <textarea id="sub_para" id="more_information" name="more_information" rows="2" cols="25" placeholder="Plus d'informations"></textarea>
 
-    <input type="pasword" id="speedPass" name="speedPass" placeholder="speedPass" disabled><br> <!-- default -->
+    <input type="pasword" id="speedPass" name="speedPass" placeholder="speedPass" disabled style="display: none"> <!-- default -->
     <br>
-    <input type="submit" value="Enregistrer le mot de passe">
+    <input type="submit" value="Enregistrer les informations">
   </form>
   <br>
-  <span id="generate_password"></span>
+  <button id="show_para"><img class="icon" src="./icon/menu-horizontal-svgrepo-com.svg"></img> </button>
+  <br>
+  <b><span id="generate_password"></span></b>
   <br>
 </div>
