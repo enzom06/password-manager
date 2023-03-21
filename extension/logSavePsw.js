@@ -1,10 +1,11 @@
 function showSpeedPassForm() {
+  document.body.style.minHeight = "250px";
   var speedPassShadow = document.createElement('div');
   speedPassShadow.setAttribute('class', 'initPopupShadow');
   speedPassShadow.setAttribute('id', 'speedPassShadow');
   var speedPassForm = document.createElement('form');
   var label = document.createElement('label');
-  label.innerHTML = 'SpeedPass<br>Définisser un mot de passe \"simple\" (de tout les jours) pour accéder à vos identifiants enregistrés';
+  label.innerHTML = 'Définisser le SpeedPass \"simple\"<br> pour une connexion rapide';
   speedPassForm.append(label);
   speedPassForm.setAttribute('class', 'initPopupForm');
   speedPassForm.setAttribute('id', 'speedPassForm');
@@ -59,6 +60,7 @@ function showSpeedPassSessionLogInForm() {
       
     } else {
       alert('speedPass incorrect');
+      speedPassInput.value = '';
     }
     
   });
@@ -70,12 +72,13 @@ function showSpeedPassSessionLogInForm() {
 }
 
 function showMasterKeyForm() {
+  document.body.style.minHeight = "250px";
   var masterKeyShadow = document.createElement('div');
   masterKeyShadow.setAttribute('class', 'initPopupShadow');
   masterKeyShadow.setAttribute('id', 'masterKeyShadow');
   var masterKeyForm = document.createElement('form');
   var label = document.createElement('label');
-  label.innerHTML = 'MasterKey<br>Définisser un mot de passe \"fort\"<br>(différent de votre speedPass<br>de plus de 16 caractères chiffre + lettre en majuscules ET minuscule de préférences aléatoire)<br>pour accéder à vos identifiants enregistrés';
+  label.innerHTML = 'Définisser un mot de passe "fort"<br><b>différent</b> de votre speedPass<br>+16 caractères, chiffres, majuscules ET minuscules<br>vos mots de passe seront dérivé de celui là<br><soan style="color: red;">ne le perdez pas ! et ne le donnez pas !<br> il n\'est pas possible de le retrouver</span>';
   masterKeyForm.setAttribute('class', 'initPopupForm');
   masterKeyForm.setAttribute('id', 'masterKeyForm');
   //masterKeyForm.setAttribute('action', 'javascript:saveMasterKey()'); // ???

@@ -68,10 +68,11 @@ window.onload = function() {
       defaultValue();
       document.querySelector("form.formSignIn input[type=submit]").addEventListener("click", async function(e) {
         e.preventDefault();
-        document.querySelector("form.formSignIn input[type=submit]").style.display = "none";
+        this.style.display = "none";
         var username = document.querySelector("form.formSignIn input[name='username']").value;
         var domain = document.querySelector("form.formSignIn input[name='domain']").value;
         var salt = document.querySelector("form.formSignIn input[name='salt']").value;
+        var length = document.querySelector("form.formSignIn input[name='length']").value;
         var iteration = document.querySelector("form.formSignIn input[name='iteration']").value;
         var version = document.querySelector("form.formSignIn input[name='version']").value;
         var status = document.querySelector("form.formSignIn select[name='status']").value;
@@ -81,8 +82,8 @@ window.onload = function() {
         var information = document.querySelector("form.formSignIn textarea[name='more_information']").value;
         var includeUppercase = document.querySelector("form.formSignIn input[name='includeUppercase']").checked;
         var includeSpecialChars = document.querySelector("form.formSignIn input[name='specialCharRequired']").checked;
-        interfaceCreationElement(username, domain, salt, iteration, version, status, timestamp_creation, timestamp_modification, timestamp_use, information, includeUppercase, includeSpecialChars);
-        document.querySelector("form.formSignIn input[type='submit']").style.display = "none";
+        interfaceCreationElement(username, domain, length, salt, iteration, version, status, timestamp_creation, timestamp_modification, timestamp_use, information, includeUppercase, includeSpecialChars);
+        this.style.display = "none";
       });
       document.querySelector("form.formSignIn").addEventListener("input", async (event) => {
         generatePassword();
@@ -106,18 +107,17 @@ window.onload = function() {
     setTimeout(function() {
       defaultValue();
       showElements(where_query="tbody#list_data_login");
-      document.querySelector("input#login_choice").addEventListener("change", function(e) {
-        var id = document.querySelector("#login_choice").value;
-        getLoginPassword(id);
-      });
+      //document.querySelector("input#login_choice").addEventListener("change", function(e) {
+      //  var id = document.querySelector("#login_choice").value;
+      //  getLoginPassword(id);
+      //});
 
       document.querySelector("input#copy_password").addEventListener("click", async function(e) {
         e.preventDefault();
-        document.querySelector("input#copy_password").style.display="none";
+        this.style.display="none";
         var id = document.querySelector("#login_choice").value;
-        getLoginPassword(id);
-        copySpanToClipboard("#generate_password");
-        document.querySelector("input#copy_password").style.display="block";
+        copySpanToClipboard(await getLoginPassword(id));
+        this.style.display="block";
       });
 
       document.querySelector("form#logIn").addEventListener("input", async (event) => {
@@ -165,7 +165,7 @@ window.onload = function() {
           return false;
         }
         changeMasterKey(masterKey); // !!!
-        document.querySelector("form#formMasterKeyChange input[type=submit]").style.display = "none";
+        this.style.display = "none";
       });
 
       document.querySelector("form#formSpeedPassChange input[type=submit]").addEventListener("click", function(e) {
@@ -189,12 +189,13 @@ window.onload = function() {
       
       document.querySelector("form#formGetMasterKey input[type=submit]").addEventListener("click", function(e) {
         e.preventDefault();
-        var speedPass = document.querySelector("form#formSpeedPassChange input[name='speedPass']").value;
+        var speedPass = document.querySelector("form#formGetMasterKey input[name='speedPass']").value;
         if(verifySpeedPass(speedPass) == false) {
-          alert("Ancien mot de passe incorrect");
+          alert("mot de passe incorrect");
           return false;
         }
         document.querySelector("span#showMasterKey").innerHTML = "Votre MasterKey " + getMasterKey();
+        this.value = "";
         setInterval(function() {
           document.querySelector("span#showMasterKey").innerHTML = "";
         }, 30000);

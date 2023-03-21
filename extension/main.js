@@ -409,7 +409,6 @@ function showElements(where_query="tbody#list_data", username="") {
 }
 function getElementsId(username, domain) {
 	var listElements = getElements();
-	console.log(listElements);
 	var list_id = [];
 	for(let i=0; i<listElements.length; i++) {
 		var credential = listElements[i];
@@ -424,7 +423,6 @@ function highlightRows(tableSelector, ids) {
 	const rows = document.querySelectorAll(tableSelector + ' tr');
 	rows.forEach(row => {
 		var id = row.querySelector('td').innerHTML;
-		console.log("id", id);
 		if (ids.includes(id)) {
 			row.querySelector('td').style.backgroundColor = 'yellow';
 		}else {
@@ -445,6 +443,7 @@ function fromJson(json) {
 function interfaceCreationElement(
 	username,
 	domain,
+	length,
 	salt,
 	iteration,
 	version,
@@ -460,6 +459,7 @@ function interfaceCreationElement(
 	var element = {
 		"username": username.toString(),
 		"domain": domain.toString(),
+		"length": length.toString(),
 		"salt": salt.toString(),
 		"iteration": iteration.toString(),
 		"version": version.toString(),
@@ -521,6 +521,12 @@ function searchPassword() {
 }
 
 async function getLoginPassword(id) {
+	if(document.querySelector("#loginPasswordInformation") != null) {
+		document.querySelector("#loginPasswordInformation").innerHTML = "Génération du mot de passe en cours...<br>(cela peut prendre quelques secondes)";
+	} else {
+		document.querySelector("#generate_password").innerHTML = "Génération du mot de passe en cours...<br>(cela peut prendre quelques secondes)Desktop";
+	}
+
 	var listElements = getElements();
 	var credential = listElements[id];
 	if(credential == undefined) {
@@ -531,17 +537,20 @@ async function getLoginPassword(id) {
 		credential['domain']
 	  ];
 	var psw = await get_password(getMasterKey(0), options, credential['salt'], credential['length'], credential['iteration'], credential['includeUppercase'], credential['includeSpecialChars']);
-	document.querySelector("#generate_password").innerHTML = psw;
+	if(document.querySelector("#loginPasswordInformation") != null) {
+		document.querySelector("#loginPasswordInformation").innerHTML = "Mot de passe copié dans le presse-papier";
+	} else {
+		document.querySelector("#generate_password").innerHTML = psw;
+	}
+	
+
 	return psw;
 }
 
-function copySpanToClipboard(selector) {
-	// Sélectionnez l'élément span que vous souhaitez copier
-	var spanToCopy = document.querySelector(selector);
-
+function copySpanToClipboard(temp_text) {
 	// Créez une zone de texte temporaire
 	var tempTextarea = document.createElement('textarea');
-	tempTextarea.value = spanToCopy.innerText;
+	tempTextarea.value = temp_text;
 
 	// Ajoutez la zone de texte temporaire à la page
 	document.body.appendChild(tempTextarea);
