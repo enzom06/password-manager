@@ -59,5 +59,6 @@ Ben, moi, chatgpt pour la fonction pbkdf2 personnalisé et pour gagner du temps 
 
 
 ## Licence
-GPL3 pour le moment
-en gros si vous faites de la thune vous pouvez m'en filez un peu. Merci bien.
+GPL3 pour le moment.
+
+Mais bien sûr, si vous faites de la thune vous pouvez m'en filez un peu. Merci bien. ;)
