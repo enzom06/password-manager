@@ -190,7 +190,7 @@ button#show_para:hover {
 
 
 .table-container {
-    height: 200px; /* Hauteur fixe pour afficher 5 éléments */
+    height: 150px; /* Hauteur fixe pour afficher 5 éléments */
     overflow-y: scroll; /* Ajouter une barre de défilement verticale */
 }
 
