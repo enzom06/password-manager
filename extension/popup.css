@@ -210,6 +210,11 @@ button#show_para:hover {
 }
 
 
+.menu_btn {
+    float: right;
+    margin: 1px;
+}
+
 
 
 

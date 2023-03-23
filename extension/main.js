@@ -11,7 +11,7 @@ async function pbkdf2(password, salt, key_length=32, iteration=4200, includeUppe
 	// Convert password and salt to bytes
 	password = new TextEncoder().encode(password);
 	salt = new TextEncoder().encode(salt);
-	var lst_of_special_caracteres = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", ";", ":", "'", ",", ".", "<", ">", "?", "/", "|", "`", "~"];
+	let lst_of_special_caracteres = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "]", "{", "}", ";", ":", "'", ",", ".", "<", ">", "?", "/", "|", "`", "~"];
 
 	// Initialize PRF with SHA-256 hash function
 	const prf = async (key, msg) => {
@@ -100,12 +100,12 @@ async function pbkdf2(password, salt, key_length=32, iteration=4200, includeUppe
 
 // symétrique encryption with AES 256
 function encrypt(text, password) {
-		var cipher = CryptoJS.AES.encrypt(text, password);
+		let cipher = CryptoJS.AES.encrypt(text, password);
 		return cipher.toString();
 }
 
 function decrypt(cipher, password) {
-		var bytes = CryptoJS.AES.decrypt(cipher, password);
+		let bytes = CryptoJS.AES.decrypt(cipher, password);
 		return bytes.toString(CryptoJS.enc.Utf8);
 }
 
@@ -162,9 +162,8 @@ function initSpeedPass(speedPass) {
 }
 
 function initMasterKey(masterKey, version=0) {
-	var version = version;
-	var speedPass = getSpeedPass();
-	var data = encryptElements([{'masterKey': masterKey, 'version': version}], speedPass);
+	let speedPass = getSpeedPass();
+	let data = encryptElements([{'masterKey': masterKey, 'version': version}], speedPass);
 	localStorage.setItem('masterKey', JSON.stringify(data));
 }
 
@@ -186,19 +185,19 @@ function existMasterKey() {
 
 // error if not login
 function getSpeedPass() {
-	var speedPass = sessionStorage.getItem('speedPass');
+	let speedPass = sessionStorage.getItem('speedPass');
 	return speedPass;
 }
 
 function getMasterKey(id=0) {
-	var data = JSON.parse(localStorage.getItem('masterKey'));
+	let data = JSON.parse(localStorage.getItem('masterKey'));
 	data = data[id]; // dict
 	data = decryptElements([data], getSpeedPass());
 	return data[0]['masterKey']; // value
 }
 
 function getAllMasterKey(id=0) {
-	var data = JSON.parse(localStorage.getItem('masterKey'));
+	let data = JSON.parse(localStorage.getItem('masterKey'));
 	data = decryptElements(data, getSpeedPass());
 	return data; // array of dict
 }
@@ -220,18 +219,18 @@ function hashSpeedPass(text) {
 
 // sub function
 function changeMasterKey(newMasterKey, id=0, incVersion=0) {
-	var version = getMasterKeyVersion(id);
-	var speedPass = getSpeedPass();
+	let version = getMasterKeyVersion(id);
+	let speedPass = getSpeedPass();
 	if (version == null) {
 		version = 0;
 	}else {
 		version += incVersion;
 	}
-	var data = encryptElements([{'masterKey': newMasterKey, 'version': version}], speedPass) // can be upgraded
-	var allMasterKey = getAllMasterKey();
+	let data = encryptElements([{'masterKey': newMasterKey, 'version': version}], speedPass) // can be upgraded
+	let allMasterKey = getAllMasterKey();
 	allMasterKey[id] = data;
 
-	var elements = getElements();
+	let elements = getElements();
 
 	localStorage.setItem('masterKey', JSON.stringify(data));
 
@@ -240,7 +239,7 @@ function changeMasterKey(newMasterKey, id=0, incVersion=0) {
 }
 
 function getMasterKeyVersion(id=0) {
-	var data = getAllMasterKey(); // should be modified to get only one
+	let data = getAllMasterKey(); // should be modified to get only one
 	if (data == null || data[id] == null) {
 		return 0;
 	}
@@ -251,7 +250,7 @@ function changeSpeedPass(actualSpeedPass, newSpeedPass) {
 	if (verifySpeedPass(actualSpeedPass) == false) {
 		return false;
 	}
-	var masterKey = getAllMasterKey();
+	let masterKey = getAllMasterKey();
 	localStorage.setItem('speedPass', hashSpeedPass(newSpeedPass));
 	sessionStorage.setItem('speedPass', newSpeedPass);
 
@@ -288,7 +287,7 @@ function clearData() {
 // elements
 
 function setNewElement(dicoValues) {
-	var listElements = getElements()
+	let listElements = getElements()
 	if (listElements == null) {
 		listElements = [];
 	}
@@ -306,7 +305,7 @@ function setElements(listElements, mKey=getMasterKey()) {
 }
 
 function getElements(mKey=getMasterKey()) {
-	var elements = JSON.parse(localStorage.getItem('sensitiveData'));
+	let elements = JSON.parse(localStorage.getItem('sensitiveData'));
 	if (elements == null) {
 		return [];
 	}
@@ -329,13 +328,13 @@ function getElements(mKey=getMasterKey()) {
 	}
 ]*/
 function deleteElement(id) {
-	var listElements = getElements();
+	let listElements = getElements();
 	listElements.splice(id, 1);
 	setElements(listElements);
 }
 
 function updateElement(id, dicoValues) {
-	var listElements = getElements();
+	let listElements = getElements();
 	listElements[id] = dicoValues;
 	setElements(listElements);
 }
@@ -343,30 +342,30 @@ function updateElement(id, dicoValues) {
 
 
 function showElements(where_query="tbody#list_data", username="") {
-	var listElements = getElements();
+	let listElements = getElements();
 
-	var content="";
-	var date="";
+	let content="";
+	let date="";
 
 	for(let i=0; i<listElements.length; i++) {
 		if (username != "" && username != listElements[i]['username']) {
 			continue;
 		}
 		if (where_query == "tbody#list_data_login") {
-		var credential = listElements[i];
+		let credential = listElements[i];
 		content+="<tr>";
 		content+="<td>"+i+"</td>";
 		
-		content+="<td>"+credential['domain']+"</td>";
-		content+="<td>"+credential['username']+"</td>";
+		content+="<td>"+ajouterAsterisques(credential['domain'])+"</td>";
+		content+="<td>"+ajouterAsterisques(credential['username'])+"</td>";
 		content+="</tr>";
 		}else if (where_query == "tbody#list_data") {
-			var credential = listElements[i];
+			let credential = listElements[i];
 			content+="<tr>";
 			content+="<td>"+i+"</td>";
 			
-			content+="<td>"+credential['domain']+"</td>";
-			content+="<td>"+credential['username']+"</td>";
+			content+="<td>"+ajouterAsterisques(credential['domain'])+"</td>";
+			content+="<td>"+ajouterAsterisques(credential['username'])+"</td>";
 			content+="<td>"+credential['version']+"</td>";
 			
 			date = new Date(parseInt(credential['timestamp_creation']));
@@ -382,7 +381,7 @@ function showElements(where_query="tbody#list_data", username="") {
 			content+="<td>"+info+"</td>";
 			content+="</tr>";
 		} else if (where_query == "tbody#list_data_search") {
-			var credential = listElements[i];
+			let credential = listElements[i];
 			content+="<tr>";
 			content+="<td>"+i+"</td>";
 			
@@ -408,10 +407,10 @@ function showElements(where_query="tbody#list_data", username="") {
 	document.querySelector(where_query).innerHTML = content;
 }
 function getElementsId(username, domain) {
-	var listElements = getElements();
-	var list_id = [];
+	let listElements = getElements();
+	let list_id = [];
 	for(let i=0; i<listElements.length; i++) {
-		var credential = listElements[i];
+		let credential = listElements[i];
 		if (credential['username'].includes(username) && credential['domain'].includes(domain)) {
 			list_id.push(i.toString());
 		}
@@ -422,7 +421,7 @@ function getElementsId(username, domain) {
 function highlightRows(tableSelector, ids) {
 	const rows = document.querySelectorAll(tableSelector + ' tr');
 	rows.forEach(row => {
-		var id = row.querySelector('td').innerHTML;
+		let id = row.querySelector('td').innerHTML;
 		if (ids.includes(id)) {
 			row.querySelector('td').style.backgroundColor = 'yellow';
 		}else {
@@ -456,7 +455,7 @@ function interfaceCreationElement(
 	includeSpecialChars
 	)
 {
-	var element = {
+	let element = {
 		"username": username.toString(),
 		"domain": domain.toString(),
 		"length": length.toString(),
@@ -487,9 +486,9 @@ function searchUserName() {
 	return new Promise((resolve, reject) => {
 	  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 		chrome.tabs.executeScript(tabs[0].id, {code:
-		  "var usernameField = document.querySelector('input[name=\"username\"], input[name=\"email\"]');" +
+		  "let usernameField = document.querySelector('input[name=\"username\"], input[name=\"email\"]');" +
 		  "if (usernameField) {" +
-		  "  var username = usernameField.value;" +
+		  "  let username = usernameField.value;" +
 		  "  username;" +
 		  "} else {" +
 		  "  \"\";" +
@@ -527,16 +526,16 @@ async function getLoginPassword(id) {
 		document.querySelector("#generate_password").innerHTML = "Génération du mot de passe en cours...<br>(cela peut prendre quelques secondes)Desktop";
 	}
 
-	var listElements = getElements();
-	var credential = listElements[id];
+	let listElements = getElements();
+	let credential = listElements[id];
 	if(credential == undefined) {
 		return "pas de mot de passe trouvé";
 	}
-	var options = [
+	let options = [
 		credential['username'],
 		credential['domain']
 	  ];
-	var psw = await get_password(getMasterKey(0), options, credential['salt'], credential['length'], credential['iteration'], credential['includeUppercase'], credential['includeSpecialChars']);
+	let psw = await get_password(getMasterKey(0), options, credential['salt'], credential['length'], credential['iteration'], credential['includeUppercase'], credential['includeSpecialChars']);
 	if(document.querySelector("#loginPasswordInformation") != null) {
 		document.querySelector("#loginPasswordInformation").innerHTML = "Mot de passe copié dans le presse-papier";
 	} else {
@@ -549,7 +548,7 @@ async function getLoginPassword(id) {
 
 function copySpanToClipboard(temp_text) {
 	// Créez une zone de texte temporaire
-	var tempTextarea = document.createElement('textarea');
+	let tempTextarea = document.createElement('textarea');
 	tempTextarea.value = temp_text;
 
 	// Ajoutez la zone de texte temporaire à la page
@@ -564,3 +563,12 @@ function copySpanToClipboard(temp_text) {
 	// Supprimez la zone de texte temporaire de la page
 	document.body.removeChild(tempTextarea);
 }
+
+function ajouterAsterisques(chaine) {
+	const longueurOriginale = chaine.length;
+	const debutAsterisques = Math.ceil(longueurOriginale * 0.5);
+	const finAsterisques = longueurOriginale - debutAsterisques;
+	const asterisques = "*".repeat(finAsterisques);
+	return chaine.slice(0, debutAsterisques) + asterisques;
+  }
+  

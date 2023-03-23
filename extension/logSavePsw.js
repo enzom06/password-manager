@@ -1,20 +1,20 @@
 function showSpeedPassForm() {
   document.body.style.minHeight = "250px";
-  var speedPassShadow = document.createElement('div');
+  let speedPassShadow = document.createElement('div');
   speedPassShadow.setAttribute('class', 'initPopupShadow');
   speedPassShadow.setAttribute('id', 'speedPassShadow');
-  var speedPassForm = document.createElement('form');
-  var label = document.createElement('label');
+  let speedPassForm = document.createElement('form');
+  let label = document.createElement('label');
   label.innerHTML = 'Définisser le SpeedPass \"simple\"<br> pour une connexion rapide';
   speedPassForm.append(label);
   speedPassForm.setAttribute('class', 'initPopupForm');
   speedPassForm.setAttribute('id', 'speedPassForm');
 
-  var speedPassInput = document.createElement('input');
+  let speedPassInput = document.createElement('input');
   speedPassInput.setAttribute('type', 'password');
   speedPassInput.setAttribute('id', 'speedPassInput');
   speedPassInput.setAttribute('placeholder', 'speedPass ...');
-  var speedPassSubmit = document.createElement('input');
+  let speedPassSubmit = document.createElement('input');
   speedPassSubmit.setAttribute('type', 'submit');
   speedPassSubmit.setAttribute('value', 'Valider');
   
@@ -31,19 +31,19 @@ function showSpeedPassForm() {
   document.querySelector(".container").append(speedPassShadow);
 }
 function showSpeedPassSessionLogInForm() {
-  var speedPassShadow = document.createElement('div');
+  let speedPassShadow = document.createElement('div');
   speedPassShadow.setAttribute('class', 'initPopupShadow');
   speedPassShadow.setAttribute('id', 'speedPassShadow');
-  var speedPassForm = document.createElement('form');
+  let speedPassForm = document.createElement('form');
   speedPassForm.setAttribute('class', 'initPopupForm');
   speedPassForm.setAttribute('id', 'speedPassForm');
 
-  var speedPassInput = document.createElement('input');
+  let speedPassInput = document.createElement('input');
   speedPassInput.setAttribute('type', 'password');
   speedPassInput.setAttribute('id', 'speedPassInput');
   speedPassInput.setAttribute('placeholder', 'speedPass ...');
   speedPassInput.setAttribute('autofocus', 'autofocus');
-  var speedPassSubmit = document.createElement('input');
+  let speedPassSubmit = document.createElement('input');
   speedPassSubmit.setAttribute('type', 'submit');
   speedPassSubmit.setAttribute('value', 'Valider');
 
@@ -73,21 +73,21 @@ function showSpeedPassSessionLogInForm() {
 
 function showMasterKeyForm() {
   document.body.style.minHeight = "250px";
-  var masterKeyShadow = document.createElement('div');
+  let masterKeyShadow = document.createElement('div');
   masterKeyShadow.setAttribute('class', 'initPopupShadow');
   masterKeyShadow.setAttribute('id', 'masterKeyShadow');
-  var masterKeyForm = document.createElement('form');
-  var label = document.createElement('label');
+  let masterKeyForm = document.createElement('form');
+  let label = document.createElement('label');
   label.innerHTML = 'Définisser un mot de passe "fort"<br><b>différent</b> de votre speedPass<br>+16 caractères, chiffres, majuscules ET minuscules<br>vos mots de passe seront dérivé de celui là<br><soan style="color: red;">ne le perdez pas ! et ne le donnez pas !<br> il n\'est pas possible de le retrouver</span>';
   masterKeyForm.setAttribute('class', 'initPopupForm');
   masterKeyForm.setAttribute('id', 'masterKeyForm');
   //masterKeyForm.setAttribute('action', 'javascript:saveMasterKey()'); // ???
 
-  var masterKeyInput = document.createElement('input');
+  let masterKeyInput = document.createElement('input');
   masterKeyInput.setAttribute('type', 'password');
   masterKeyInput.setAttribute('id', 'masterKeyInput');
 
-  var masterKeySubmit = document.createElement('input');
+  let masterKeySubmit = document.createElement('input');
   masterKeySubmit.setAttribute('type', 'submit');
   masterKeySubmit.setAttribute('value', 'Valider');
 
@@ -114,35 +114,35 @@ function showMasterKeyForm() {
 async function defaultValue() {
   getDomainName();
 
-  var username = document.querySelector('form input[name="username"]');
+  let username = document.querySelector('form input[name="username"]');
   if(username != null) {
     username.value = await searchUserName();
   }
 
-  var length = document.querySelector('form  input[name="length"]');
+  let length = document.querySelector('form  input[name="length"]');
   if(length != null) {
     length.value = 16;
   }
 
-  var salt = document.querySelector('form  input[name="salt"]');
+  let salt = document.querySelector('form  input[name="salt"]');
   if(salt != null) {
     salt.value = 42;
   }
 
-  var interation = document.querySelector('form  input[name="iteration"]');
+  let interation = document.querySelector('form  input[name="iteration"]');
   if(interation != null) {
     interation.value = 1000;
   }
 
-  //var keylen = document.querySelector('form.formSignIn input#keylen');
+  //let keylen = document.querySelector('form.formSignIn input#keylen');
   //keylen.value = 64;
   
-  var version = document.querySelector('form  input[name="version"]');
+  let version = document.querySelector('form  input[name="version"]');
   if(version != null) {
     version.value = 1;
   }
 
-  var speedPass = document.querySelector('form  input[name="speedPass"]');
+  let speedPass = document.querySelector('form  input[name="speedPass"]');
   if(speedPass != null) {
     speedPass.type = 'text';
     speedPass.value = getSpeedPass();
