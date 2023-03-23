@@ -62,3 +62,7 @@ Ben, moi, chatgpt pour la fonction pbkdf2 personnalisé et pour gagner du temps 
 GPL3 pour le moment.
 
 Mais bien sûr, si vous faites de la thune vous pouvez m'en filez un peu. Merci bien. ;)
+
+## Post scriptum
+
+Je suis pas sûr sûr de où stocker les données localement, donc si vous avez des idées.
