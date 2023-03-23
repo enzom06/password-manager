@@ -37,6 +37,9 @@ Cette extension permet de générer des mots de passe pour chacun de vos comptes
 Bientôt sur le **Chrome Web Store**
 
 ## Utilisation
+
+Dès lors que l'extension sera publier suiver les étapes suivantes.
+
 Lors de votre première utilisation vous devez définir votre MasterKey et votre speed Pass.
 
 Une fois la MasterKey et le SpeedPass défini **vous pouvez commencer votre utilisation quotidienne**.
