@@ -424,6 +424,12 @@ function highlightRows(tableSelector, ids) {
 		let id = row.querySelector('td').innerHTML;
 		if (ids.includes(id)) {
 			row.querySelector('td').style.backgroundColor = 'yellow';
+			if(ids.length == 1) {
+				row.querySelector('td').style.backgroundColor = 'green';
+				if(document.querySelector("#login_choice") != null) {
+					document.querySelector("#login_choice").value = id;
+				}
+			}
 		}else {
 			row.querySelector('td').style.backgroundColor = 'white';
 		}
@@ -483,24 +489,30 @@ function connectWithSpeedPass(speedPass) {
 }
 
 function searchUserName() {
-	return new Promise((resolve, reject) => {
-	  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		chrome.tabs.executeScript(tabs[0].id, {code:
-		  "let usernameField = document.querySelector('input[name=\"username\"], input[name=\"email\"]');" +
-		  "if (usernameField) {" +
-		  "  let username = usernameField.value;" +
-		  "  username;" +
-		  "} else {" +
-		  "  \"\";" +
-		  "}"}, function(result) {
-		  if (chrome.runtime.lastError) {
-			reject(chrome.runtime.lastError);
-		  } else {
-			resolve(result[0]);
-		  }
+	let data = "";
+	try {
+		data = new Promise((resolve, reject) => {
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			chrome.tabs.executeScript(tabs[0].id, {code:
+			"let usernameField = document.querySelector('input[name=\"username\"], input[name=\"email\"]');" +
+			"if (usernameField) {" +
+			"  let username = usernameField.value;" +
+			"  username;" +
+			"} else {" +
+			"  \"\";" +
+			"}"}, function(result) {
+			if (chrome.runtime.lastError) {
+				reject(chrome.runtime.lastError);
+			} else {
+				resolve(result[0]);
+			}
+			});
 		});
-	  });
-	});
+		});
+	} catch (e) {
+		data = "";
+	}
+	return data;
   }
   
 function searchPassword() {
