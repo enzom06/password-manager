@@ -44,7 +44,7 @@ Lors de votre première utilisation vous devez définir votre MasterKey et votre
 
 Une fois la MasterKey et le SpeedPass défini **vous pouvez commencer votre utilisation quotidienne**.
 
-Je ne suis pas votre daron débrouillez-vous, j'ai fais une interface déjà très intuitive.
+L'interface est intuitive, alors laissez-vous guider.
 
 ### Master Key
 C'est de ces mots de passe que seront dérivés les autres mots de passe donc il doit avoir plus de 16 caractères (majuscules, minuscules, nombres, caractères spéciaux).
@@ -64,8 +64,9 @@ Ben, moi, chatgpt pour la fonction pbkdf2 personnalisé et pour gagner du temps 
 ## Licence
 GPL3 pour le moment.
 
-Mais bien sûr, si vous faites de la thune vous pouvez m'en filez un peu. Merci bien. ;)
+Mais bien sûr, si vous faites de la thune vous pouvez m'en filez un peu, j'aimerai créer d'autre project. Merci bien. ;)
 
 ## Post scriptum
 
 Je suis pas sûr sûr de où stocker les données localement, donc si vous avez des idées.
+Plus globalement je viens de commencer le développement "d'extension", il y a donc de bonne pratique que je n'ai pas, n'hésitez pas à le faire savoir. ;)
