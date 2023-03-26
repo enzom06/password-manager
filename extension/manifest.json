@@ -1,21 +1,23 @@
 {
   "name": "FastSimplePasswordManager",
-  "version": "1.0",
-  "manifest_version": 2,
-  "description": "un simple gestionnaire de mot de passe",
-  "icons": {
-    "32": "icon/32x32.png",
-    "192": "icon/192x192.png",
-    "512": "icon/512x512.png"
-  },
-  "browser_action": {
+  "version": "0.5",
+  "manifest_version": 3,
+  "description": "un simple gestionnaire de mot de passe sans stocker vos mots de passe",
+  "action": {
+    "default_icon": {
+      "32": "icon/32x32.png",
+      "192": "icon/192x192.png",
+      "512": "icon/512x512.png"
+    },
     "default_title": "Fast Simple Password Manager",
     "default_popup": "popup.html"
   },
   "permissions": [
-    "tabs",
     "storage",
-    "activeTab",
-    "<all_urls>"
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
   ]
 }

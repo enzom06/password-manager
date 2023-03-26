@@ -491,7 +491,8 @@ function connectWithSpeedPass(speedPass) {
 function searchUserName() {
 	let data = "";
 	try {
-		data = new Promise((resolve, reject) => {
+		data = ""
+		/*new Promise((resolve, reject) => {
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			chrome.tabs.executeScript(tabs[0].id, {code:
 			"let usernameField = document.querySelector('input[name=\"username\"], input[name=\"email\"]');" +
@@ -508,7 +509,7 @@ function searchUserName() {
 			}
 			});
 		});
-		});
+		});*/
 	} catch (e) {
 		data = "";
 	}

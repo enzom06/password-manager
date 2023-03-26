@@ -26,7 +26,7 @@ function loadHTMLFile(filename) {
       document.querySelector(".container").innerHTML = htmlContent;
     }
   };
-  xhr.open("GET", chrome.extension.getURL(filename), true);
+  xhr.open("GET", chrome.runtime.getURL(filename), true);
   xhr.send();
 }
 
